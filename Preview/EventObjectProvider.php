@@ -76,8 +76,8 @@ class EventObjectProvider implements PreviewObjectProviderInterface
 
     public function serialize($object)
     {
-        if(!$object->getName()) $object->setName();
-        if(!$object->getDescription()) $object->setDescription();
+        if (!$object->getName()) $object->setName();
+        if (!$object->getDescription()) $object->setDescription();
 
         return serialize($object);
     }

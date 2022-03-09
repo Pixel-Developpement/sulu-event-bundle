@@ -31,7 +31,7 @@ class EventRemovedEvent extends DomainEvent
 
     public function getResourceId(): string
     {
-        return (string) $this->id;
+        return (string)$this->id;
     }
 
     public function getResourceTitle(): ?string
