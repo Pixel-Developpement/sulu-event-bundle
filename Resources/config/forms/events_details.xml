@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<form xmlns="http://schemas.sulu.io/template/template"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://schemas.sulu.io/template/template http://schemas.sulu.io/template/form-1.0.xsd"
+>
+    <key>event_details</key>
+    <properties>
+        <property name="name" colspan="10" type="text_line" mandatory="true">
+            <meta>
+                <title>event.name</title>
+            </meta>
+            <tag name="sulu.rlp.part"/>
+            <params>
+                <param name="headline" value="true"/>
+            </params>
+        </property>
+        <property name="enabled" colspan="2" type="checkbox" mandatory="true">
+            <meta>
+                <title>event.is_active</title>
+            </meta>
+
+        </property>
+        <property name="startDate" colspan="6" type="date" mandatory="true">
+            <meta>
+                <title>event.start_date</title>
+            </meta>
+        </property>
+        <property name="endDate" colspan="6" type="date">
+            <meta>
+                <title>event.end_date</title>
+            </meta>
+        </property>
+        <property name="routePath" type="route" mandatory="true" colspan="12">
+            <meta>
+                <title>sulu_admin.url</title>
+            </meta>
+            <params>
+                <param name="entity_class" value="Pixel\EventBundle\Entity\Event"/>
+                <param name="route_schema" value="/events/{implode('-', object)}"/>
+            </params>
+        </property>
+        <property name="url" type="url" colspan="4">
+            <meta>
+                <title>event.website</title>
+            </meta>
+            <params>
+                <param name="schemes" type="collection">
+                    <param name="https://"/>
+                </param>
+            </params>
+        </property>
+        <property name="email" type="text_line" colspan="4">
+            <meta>
+                <title>event.email</title>
+            </meta>
+        </property>
+        <property name="phoneNumber" type="text_line" colspan="4">
+            <meta>
+                <title>event.phone_number</title>
+            </meta>
+        </property>
+        <property name="image" type="single_media_selection" colspan="6" mandatory="true">
+            <meta>
+                <title>event.image</title>
+            </meta>
+            <params>
+                <param name="types" value="image"/>
+            </params>
+        </property>
+        <property name="pdf" type="single_media_selection" colspan="6">
+            <meta>
+                <title>event.pdf</title>
+            </meta>
+            <params>
+                <param name="types" value="document"/>
+            </params>
+        </property>
+        <property name="cards" type="card_selection">
+            <meta>
+                <title>event.directory</title>
+            </meta>
+        </property>
+
+        <property name="description" type="text_editor" mandatory="true">
+            <meta>
+                <title>event.description</title>
+            </meta>
+        </property>
+        <property name="location" type="location" >
+            <meta>
+                <title>event.location</title>
+            </meta>
+        </property>
+    </properties>
+</form>
