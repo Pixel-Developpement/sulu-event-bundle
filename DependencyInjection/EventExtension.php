@@ -2,15 +2,14 @@
 
 namespace Pixel\EventBundle\DependencyInjection;
 
+use Pixel\EventBundle\Admin\EventAdmin;
+use Pixel\EventBundle\Entity\Event;
 use Sulu\Bundle\PersistenceBundle\DependencyInjection\PersistenceExtensionTrait;
-use Sulu\Component\Rest\Exception\EntityNotFoundException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Extension\PrependExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader;
-use Pixel\EventBundle\Entity\Event;
-use Pixel\EventBundle\Admin\EventAdmin;
 
 class EventExtension extends Extension implements PrependExtensionInterface
 {
@@ -40,7 +39,7 @@ class EventExtension extends Extension implements PrependExtensionInterface
                                 'detail' => 'event.get_event',
                                 'list' => 'event.get_events',
                             ],
-                        ]
+                        ],
                     ],
                     'field_type_options' => [
                         'selection' => [
@@ -50,8 +49,8 @@ class EventExtension extends Extension implements PrependExtensionInterface
                                 'view' => [
                                     'name' => EventAdmin::EVENT_EDIT_FORM_VIEW,
                                     'result_to_view' => [
-                                        'id' => 'id'
-                                    ]
+                                        'id' => 'id',
+                                    ],
                                 ],
                                 'types' => [
                                     'list_overlay' => [
@@ -60,10 +59,10 @@ class EventExtension extends Extension implements PrependExtensionInterface
                                         'display_properties' => ['name'],
                                         'icon' => 'su-calendar',
                                         'label' => 'events',
-                                        'overlay_title' => 'event.event_list'
-                                    ]
-                                ]
-                            ]
+                                        'overlay_title' => 'event.event_list',
+                                    ],
+                                ],
+                            ],
                         ],
                         'single_selection' => [
                             'single_event_selection' => [
@@ -72,8 +71,8 @@ class EventExtension extends Extension implements PrependExtensionInterface
                                 'view' => [
                                     'name' => EventAdmin::EVENT_EDIT_FORM_VIEW,
                                     'result_to_view' => [
-                                        'id' => 'id'
-                                    ]
+                                        'id' => 'id',
+                                    ],
                                 ],
                                 'types' => [
                                     'list_overlay' => [
@@ -82,16 +81,16 @@ class EventExtension extends Extension implements PrependExtensionInterface
                                         'display_properties' => ['name'],
                                         'icon' => 'su-calendar',
                                         'empty_text' => 'event.empty_event',
-                                        'overlay_title' => 'event.event_list'
+                                        'overlay_title' => 'event.event_list',
                                     ],
                                     'auto_complete' => [
                                         'display_property' => 'name',
-                                        'search_properties' => ['name']
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
+                                        'search_properties' => ['name'],
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
                 ]
             );
         }
@@ -111,13 +110,13 @@ class EventExtension extends Extension implements PrependExtensionInterface
                                 ],
                             ],
                             'security_context' => Event::SECURITY_CONTEXT,
-                        ]
+                        ],
                     ],
                     'website' => [
                         "indexes" => [
-                            "event"
-                        ]
-                    ]
+                            "event",
+                        ],
+                    ],
                 ]
             );
         }

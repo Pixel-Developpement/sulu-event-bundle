@@ -1,5 +1,5 @@
 {
-  "name": "pixel/sulu-eventbundle",
+  "name": "pixeldev/sulu-eventbundle",
   "type": "sulu-bundle",
   "description": "Manage a event for Sulu",
   "keywords": [
@@ -17,7 +17,6 @@
   ],
   "require": {
     "php": "^7.4 || ^8.0",
-    "sulu/content-bundle": "^0.6.1",
     "sulu/sulu": "2.3.*",
     "symfony/config": "^4.4 || ^5.0",
     "symfony/dependency-injection": "^4.4 || ^5.0",

@@ -2,22 +2,16 @@
 
 namespace Pixel\EventBundle\Repository;
 
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ManagerRegistry;
 use Pixel\EventBundle\Entity\Event;
 use Sulu\Component\SmartContent\Orm\DataProviderRepositoryInterface;
 use Sulu\Component\SmartContent\Orm\DataProviderRepositoryTrait;
-use Sulu\Component\Security\Authentication\UserInterface;
-use function Clue\StreamFilter\remove;
 
 class EventRepository extends EntityRepository implements DataProviderRepositoryInterface
 {
     use DataProviderRepositoryTrait;
-
-
 
     public function create(string $locale): Event
     {
@@ -35,7 +29,7 @@ class EventRepository extends EntityRepository implements DataProviderRepository
     public function findById(int $id, string $locale): ?Event
     {
         $event = $this->find($id);
-        if(!$event){
+        if (!$event) {
             return null;
         }
         $event->setLocale($locale);
@@ -46,7 +40,7 @@ class EventRepository extends EntityRepository implements DataProviderRepository
     {
         $offset = ($page * $limit) - $limit;
         $criteria = [
-            'enabled' => true
+            'enabled' => true,
         ];
         return $this->findBy($criteria, [], $limit, $offset);
     }
@@ -69,7 +63,7 @@ class EventRepository extends EntityRepository implements DataProviderRepository
 
     public function appendCategoriesRelation(QueryBuilder $queryBuilder, $alias)
     {
-        return $alias.'.category';
+        return $alias . '.category';
         //$queryBuilder->addSelect($alias.'.category');
     }
 

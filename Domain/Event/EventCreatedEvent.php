@@ -41,7 +41,7 @@ class EventCreatedEvent extends DomainEvent
 
     public function getResourceId(): string
     {
-        return (string) $this->event->getId();
+        return (string)$this->event->getId();
     }
 
     public function getResourceTitle(): ?string

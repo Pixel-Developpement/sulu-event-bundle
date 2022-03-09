@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Pixel\EventBundle\Content;
 
 use JMS\Serializer\Annotation as Serializer;
-use  Pixel\EventBundle\Entity\Event;
+use Pixel\EventBundle\Entity\Event;
 use Sulu\Component\SmartContent\ItemInterface;
 
 /**
@@ -25,7 +25,7 @@ class EventDataItem implements ItemInterface
      */
     public function getId(): string
     {
-        return (string) $this->entity->getId();
+        return (string)$this->entity->getId();
     }
 
     /**
@@ -33,7 +33,7 @@ class EventDataItem implements ItemInterface
      */
     public function getTitle(): string
     {
-        return (string) $this->entity->getName();
+        return (string)$this->entity->getName();
     }
 
     /**
