@@ -1,12 +1,11 @@
 {
   "name": "pixeldev/sulu-eventbundle",
   "type": "sulu-bundle",
-  "description": "Manage a event for Sulu",
+  "description": "Manage events for Sulu",
   "keywords": [
     "sulu",
     "suluCms",
-    "news",
-    "directory"
+    "event"
   ],
   "homepage": "https://github.com/Pixel-Developpement/sulu-townhallbundle",
   "license": "MIT",
@@ -17,7 +16,7 @@
   ],
   "require": {
     "php": "^7.4 || ^8.0",
-    "sulu/sulu": "2.3.*",
+    "sulu/sulu": "^2.4",
     "symfony/config": "^4.4 || ^5.0",
     "symfony/dependency-injection": "^4.4 || ^5.0",
     "symfony/framework-bundle": "^4.4 || ^5.0",
@@ -32,7 +31,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Pixel\\DirectoryBundle\\": ""
+      "Pixel\\EventBundle\\": ""
     }
   },
   "config": {
