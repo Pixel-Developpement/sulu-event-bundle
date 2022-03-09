@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Pixel\EventBundle\Content;
 
-use Pixel\EventBundle\Entity\Event;
 use Sulu\Component\Serializer\ArraySerializerInterface;
+use Sulu\Component\SmartContent\ItemInterface;
 use Sulu\Component\SmartContent\Orm\BaseDataProvider;
 use Sulu\Component\SmartContent\Orm\DataProviderRepositoryInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Sulu\Component\SmartContent\ItemInterface;
 
 class EventDataProvider extends BaseDataProvider
 {
@@ -35,7 +34,7 @@ class EventDataProvider extends BaseDataProvider
                 ->enableSorting([
                     ['column' => 'translation.name', 'title' => 'event.name'],
                     ['column' => 'startDate', 'title' => 'event.start_date'],
-                    ['column' => 'endDate', 'title' => 'event.end_date']
+                    ['column' => 'endDate', 'title' => 'event.end_date'],
                 ])
                 ->getConfiguration();
         }
@@ -68,7 +67,8 @@ class EventDataProvider extends BaseDataProvider
      *
      * @return array
      */
-    protected function getOptions(array $propertyParameter, array $options = []) {
+    protected function getOptions(array $propertyParameter, array $options = [])
+    {
         $request = $this->requestStack->getCurrentRequest();
 
         $result = [

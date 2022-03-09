@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Pixel\EventBundle\Content\Type;
 
-use Pixel\EventBundle\Entity\Event;
 use Doctrine\ORM\EntityManagerInterface;
+use Pixel\EventBundle\Entity\Event;
 use Sulu\Component\Content\Compat\PropertyInterface;
 use Sulu\Component\Content\SimpleContentType;
+
 class EventSelection extends SimpleContentType
 {
     protected EntityManagerInterface $entityManager;

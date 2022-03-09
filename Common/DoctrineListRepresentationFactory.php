@@ -20,11 +20,12 @@ class DoctrineListRepresentationFactory
     private FieldDescriptorFactoryInterface $fieldDescriptorFactory;
 
     public function __construct(
-        RestHelperInterface $restHelper,
-        ListRestHelperInterface $listRestHelper,
+        RestHelperInterface                 $restHelper,
+        ListRestHelperInterface             $listRestHelper,
         DoctrineListBuilderFactoryInterface $listBuilderFactory,
-        FieldDescriptorFactoryInterface $fieldDescriptorFactory
-    ) {
+        FieldDescriptorFactoryInterface     $fieldDescriptorFactory
+    )
+    {
         $this->restHelper = $restHelper;
         $this->listRestHelper = $listRestHelper;
         $this->listBuilderFactory = $listBuilderFactory;
@@ -38,10 +39,11 @@ class DoctrineListRepresentationFactory
      */
     public function createDoctrineListRepresentation(
         string $resourceKey,
-        array $filters = [],
-        array $parameters = [],
-        array $includedFields = []
-    ): PaginatedRepresentation {
+        array  $filters = [],
+        array  $parameters = [],
+        array  $includedFields = []
+    ): PaginatedRepresentation
+    {
         /** @var DoctrineFieldDescriptor[] $fieldDescriptors */
         $fieldDescriptors = $this->fieldDescriptorFactory->getFieldDescriptors($resourceKey);
 
@@ -76,9 +78,9 @@ class DoctrineListRepresentationFactory
         return new PaginatedRepresentation(
             $items,
             $resourceKey,
-            (int) $listBuilder->getCurrentPage(),
-            (int) $listBuilder->getLimit(),
-            (int) $listBuilder->count()
+            (int)$listBuilder->getCurrentPage(),
+            (int)$listBuilder->getLimit(),
+            (int)$listBuilder->count()
         );
     }
 }

@@ -49,7 +49,8 @@
             <tag name="sulu.context" context="admin"/>
         </service>
 
-        <service id="event.event_repository" class="Pixel\EventBundle\Repository\EventRepository" public="true" lazy="true">
+        <service id="event.event_repository" class="Pixel\EventBundle\Repository\EventRepository" public="true"
+                 lazy="true">
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
             <argument type="service">
                 <service class="Doctrine\ORM\Mapping\ClassMetadata">
@@ -71,7 +72,8 @@
             <tag name="sulu.content.type" alias="single_event_selection"/>
         </service>
 
-        <service id="sulu_event.routing_provider" public="true" class="Pixel\EventBundle\Routing\EventRouteDefaultsProvider">
+        <service id="sulu_event.routing_provider" public="true"
+                 class="Pixel\EventBundle\Routing\EventRouteDefaultsProvider">
             <argument type="service" id="event.event_repository"/>
             <tag name="sulu_route.defaults_provider"/>
         </service>

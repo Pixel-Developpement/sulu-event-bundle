@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Pixel\EventBundle\Controller\Website;
 
-use Http\Client\Common\Exception\HttpClientNotFoundException;
 use Pixel\EventBundle\Entity\Event;
 use Sulu\Bundle\PreviewBundle\Preview\Preview;
 use Sulu\Bundle\RouteBundle\Entity\RouteRepositoryInterface;
@@ -15,6 +14,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends AbstractController
 {
+    /**
+     * @return string[]
+     */
+    public static function getSubscribedServices()
+    {
+        $subscribedServices = parent::getSubscribedServices();
+
+        $subscribedServices['sulu_core.webspace.webspace_manager'] = WebspaceManagerInterface::class;
+        $subscribedServices['sulu.repository.route'] = RouteRepositoryInterface::class;
+        $subscribedServices['sulu_website.resolver.template_attribute'] = TemplateAttributeResolverInterface::class;
+
+        return $subscribedServices;
+    }
+
     public function indexAction(Event $event, $attributes = [], $preview = false, $partial = false): Response
     {
         $parameters = $this->get('sulu_website.resolver.template_attribute')->resolve([
@@ -28,7 +41,7 @@ class EventController extends AbstractController
                 'content',
                 $parameters
             );
-        } elseif ($preview) {
+        } else if ($preview) {
             $content = $this->renderPreview(
                 '@Event/event.html.twig',
                 $parameters
@@ -44,13 +57,24 @@ class EventController extends AbstractController
         return new Response($content);
     }
 
-    protected function renderPreview(string $view, array $parameters = []): string
+    /**
+     * @return array<string, array>
+     */
+    protected function getLocalizationsArrayForEntity(Event $entity): array
     {
-        $parameters['previewParentTemplate'] = $view;
-        $parameters['previewContentReplacer'] = Preview::CONTENT_REPLACER;
-        //$album = $parameters['album'];
+        $routes = $this->get('sulu.repository.route')->findAllByEntity(Event::class, (string)$entity->getId());
 
-        return $this->renderView('@SuluWebsite/Preview/preview.html.twig', $parameters);
+        $localizations = [];
+        foreach ($routes as $route) {
+            $url = $this->get('sulu_core.webspace.webspace_manager')->findUrlByResourceLocator(
+                $route->getPath(),
+                null,
+                $route->getLocale()
+            );
+
+            $localizations[$route->getLocale()] = ['locale' => $route->getLocale(), 'url' => $url];
+        }
+        return $localizations;
     }
 
     /**
@@ -75,7 +99,8 @@ class EventController extends AbstractController
             ob_end_clean();
 
             return $rendered;
-        } catch (\Exception $e) {
+        }
+        catch (\Exception $e) {
             while (ob_get_level() > $level) {
                 ob_end_clean();
             }
@@ -84,37 +109,11 @@ class EventController extends AbstractController
         }
     }
 
-    /**
-     * @return array<string, array>
-     */
-    protected function getLocalizationsArrayForEntity(Event $entity): array
+    protected function renderPreview(string $view, array $parameters = []): string
     {
-        $routes = $this->get('sulu.repository.route')->findAllByEntity(Event::class, (string) $entity->getId());
+        $parameters['previewParentTemplate'] = $view;
+        $parameters['previewContentReplacer'] = Preview::CONTENT_REPLACER;
 
-        $localizations = [];
-        foreach ($routes as $route) {
-            $url = $this->get('sulu_core.webspace.webspace_manager')->findUrlByResourceLocator(
-                $route->getPath(),
-                null,
-                $route->getLocale()
-            );
-
-            $localizations[$route->getLocale()] = ['locale' => $route->getLocale(), 'url' => $url];
-        }
-        return $localizations;
-    }
-
-    /**
-     * @return string[]
-     */
-    public static function getSubscribedServices()
-    {
-        $subscribedServices = parent::getSubscribedServices();
-
-        $subscribedServices['sulu_core.webspace.webspace_manager'] = WebspaceManagerInterface::class;
-        $subscribedServices['sulu.repository.route'] = RouteRepositoryInterface::class;
-        $subscribedServices['sulu_website.resolver.template_attribute'] = TemplateAttributeResolverInterface::class;
-
-        return $subscribedServices;
+        return $this->renderView('@SuluWebsite/Preview/preview.html.twig', $parameters);
     }
 }

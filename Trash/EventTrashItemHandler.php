@@ -26,6 +26,11 @@ class EventTrashItemHandler implements StoreTrashItemHandlerInterface, RestoreTr
         $this->entityManager = $entityManager;
     }
 
+    public static function getResourceKey(): string
+    {
+        return Event::RESOURCE_KEY;
+    }
+
     public function store(object $resource, array $options = []): TrashItemInterface
     {
         $image = $resource->getImage();
@@ -45,7 +50,7 @@ class EventTrashItemHandler implements StoreTrashItemHandlerInterface, RestoreTr
             "url" => $resource->getUrl(),
             "email" => $resource->getEmail(),
             "phoneNumber" => $resource->getPhoneNumber(),
-            "cards" => $resource->getCards()
+            "cards" => $resource->getCards(),
         ];
 
         return $this->trashItemRepository->create(
@@ -73,7 +78,7 @@ class EventTrashItemHandler implements StoreTrashItemHandlerInterface, RestoreTr
         $event->setEndDate($data['endDate']);
         $event->setEnabled($data['enabled']);
         $event->setImage($this->entityManager->find(MediaInterface::class, $data['imageId']));
-        if($data['pdfId']){
+        if ($data['pdfId']) {
             $event->setPdf($this->entityManager->find(MediaInterface::class, $data['pdfId']));
         }
         $event->setLocation($data['location']);
@@ -90,10 +95,5 @@ class EventTrashItemHandler implements StoreTrashItemHandlerInterface, RestoreTr
     public function getConfiguration(): RestoreConfiguration
     {
         return new RestoreConfiguration(null, EventAdmin::EVENT_EDIT_FORM_VIEW, ['id' => 'id']);
-    }
-
-    public static function getResourceKey(): string
-    {
-        return Event::RESOURCE_KEY;
     }
 }

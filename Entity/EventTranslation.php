@@ -61,7 +61,7 @@ class EventTranslation implements AuditableInterface
      */
     private ?array $seo = null;
 
-    public  function __construct(Event $event, string $locale)
+    public function __construct(Event $event, string $locale)
     {
         $this->event = $event;
         $this->locale = $locale;

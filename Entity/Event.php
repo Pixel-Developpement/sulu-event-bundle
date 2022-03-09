@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Serializer;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
-use Pixel\DirectoryBundle\Entity\Card;
 
 /**
  * @ORM\Entity()
@@ -123,10 +122,18 @@ class Event
     public function getName(): ?string
     {
         $translation = $this->getTranslation($this->locale);
-        if(!$translation){
+        if (!$translation) {
             return null;
         }
         return $translation->getName();
+    }
+
+    protected function getTranslation(string $locale): ?EventTranslation
+    {
+        if (!$this->translations->containsKey($locale)) {
+            return null;
+        }
+        return $this->translations->get($locale);
     }
 
     /**
@@ -136,11 +143,18 @@ class Event
     public function setName(string $name): self
     {
         $translation = $this->getTranslation($this->locale);
-        if(!$translation){
+        if (!$translation) {
             $translation = $this->createTranslation($this->locale);
         }
         $translation->setName($name);
         return $this;
+    }
+
+    protected function createTranslation(string $locale): EventTranslation
+    {
+        $translation = new EventTranslation($this, $locale);
+        $this->translations->set($locale, $translation);
+        return $translation;
     }
 
     /**
@@ -150,7 +164,7 @@ class Event
     public function getDescription(): ?string
     {
         $translation = $this->getTranslation($this->locale);
-        if(!$translation){
+        if (!$translation) {
             return null;
         }
         return $translation->getDescription();
@@ -163,7 +177,7 @@ class Event
     public function setDescription(?string $description): self
     {
         $translation = $this->getTranslation($this->locale);
-        if(!$translation){
+        if (!$translation) {
             $translation = $this->createTranslation($this->locale);
         }
         $translation->setDescription($description);
@@ -177,7 +191,7 @@ class Event
     public function getRoutePath(): ?string
     {
         $translation = $this->getTranslation($this->locale);
-        if(!$translation){
+        if (!$translation) {
             return null;
         }
         return $translation->getRoutePath();
@@ -186,7 +200,7 @@ class Event
     public function setRoutePath(string $routePath): self
     {
         $translation = $this->getTranslation($this->locale);
-        if(!$translation){
+        if (!$translation) {
             $translation = $this->createTranslation($this->locale);
         }
         $translation->setRoutePath($routePath);
@@ -200,7 +214,7 @@ class Event
     public function getSeo(): ?array
     {
         $translation = $this->getTranslation($this->locale);
-        if(!$translation){
+        if (!$translation) {
             return null;
         }
         return $translation->getSeo();
@@ -213,7 +227,7 @@ class Event
     public function setSeo(?array $seo): self
     {
         $translation = $this->getTranslation($this->locale);
-        if(!$translation){
+        if (!$translation) {
             $translation = $this->createTranslation($this->locale);
         }
         $translation->setSeo($seo);
@@ -317,14 +331,6 @@ class Event
     }
 
     /**
-     * @return MediaInterface|null
-     */
-    public function getImage(): ?MediaInterface
-    {
-        return $this->image;
-    }
-
-    /**
      * @return array<string, mixed>
      *
      * @Serializer\VirtualProperty()
@@ -339,6 +345,14 @@ class Event
         }
 
         return null;
+    }
+
+    /**
+     * @return MediaInterface|null
+     */
+    public function getImage(): ?MediaInterface
+    {
+        return $this->image;
     }
 
     /**
@@ -397,26 +411,9 @@ class Event
         $this->cards = $cards;
     }
 
-
-
     public function getTranslations(): array
     {
         return $this->translations->toArray();
-    }
-
-    protected function getTranslation(string $locale): ?EventTranslation
-    {
-        if(!$this->translations->containsKey($locale)){
-            return null;
-        }
-        return $this->translations->get($locale);
-    }
-
-    protected function createTranslation(string $locale): EventTranslation
-    {
-        $translation = new EventTranslation($this, $locale);
-        $this->translations->set($locale, $translation);
-        return $translation;
     }
 
     public function getLocale(): string

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Pixel\EventBundle\Sitemap;
 
-use Pixel\eventBundle\Repository\EventRepository;
+use Pixel\EventBundle\Repository\EventRepository;
 use Sulu\Bundle\WebsiteBundle\Sitemap\Sitemap;
 use Sulu\Bundle\WebsiteBundle\Sitemap\SitemapProviderInterface;
 use Sulu\Bundle\WebsiteBundle\Sitemap\SitemapUrl;
@@ -46,9 +46,17 @@ class EventSitemapProvider implements SitemapProviderInterface
         return $result;
     }
 
-    public function getAlias(): string
+    private function getLocaleByHost($host)
     {
-        return 'event';
+        if (!\array_key_exists($host, $this->locales)) {
+            $portalInformation = $this->webspaceManager->getPortalInformations();
+            foreach ($portalInformation as $hostName => $portal) {
+                if ($hostName === $host) {
+                    $this->locales[$host] = $portal->getLocale();
+                }
+            }
+        }
+        if (isset($this->locales[$host])) return $this->locales[$host];
     }
 
     public function createSitemap($scheme, $host): Sitemap
@@ -56,20 +64,13 @@ class EventSitemapProvider implements SitemapProviderInterface
         return new Sitemap($this->getAlias(), $this->getMaxPage($scheme, $host));
     }
 
+    public function getAlias(): string
+    {
+        return 'event';
+    }
+
     public function getMaxPage($scheme, $host)
     {
         return ceil($this->eventRepository->countForSitemap() / self::PAGE_SIZE);
-    }
-
-    private function getLocaleByHost($host) {
-        if(!\array_key_exists($host, $this->locales)) {
-            $portalInformation = $this->webspaceManager->getPortalInformations();
-            foreach ($portalInformation as $hostName => $portal) {
-                if($hostName === $host) {
-                    $this->locales[$host] = $portal->getLocale();
-                }
-            }
-        }
-        if  (isset($this->locales[$host])) return $this->locales[$host];
     }
 }

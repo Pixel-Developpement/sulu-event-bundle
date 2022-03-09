@@ -13,7 +13,6 @@ use Sulu\Bundle\AdminBundle\Admin\View\ToolbarAction;
 use Sulu\Bundle\AdminBundle\Admin\View\ViewBuilderFactoryInterface;
 use Sulu\Bundle\AdminBundle\Admin\View\ViewCollection;
 use Sulu\Component\Security\Authorization\PermissionTypes;
-use Sulu\Component\Security\Authorization\SecurityChecker;
 use Sulu\Component\Security\Authorization\SecurityCheckerInterface;
 use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 
@@ -35,9 +34,9 @@ class EventAdmin extends Admin
     private ActivityViewBuilderFactoryInterface $activityViewBuilderFactory;
 
     public function __construct(
-        ViewBuilderFactoryInterface $viewBuilderFactory,
-        SecurityCheckerInterface $securityChecker,
-        WebspaceManagerInterface $webspaceManager,
+        ViewBuilderFactoryInterface         $viewBuilderFactory,
+        SecurityCheckerInterface            $securityChecker,
+        WebspaceManagerInterface            $webspaceManager,
         ActivityViewBuilderFactoryInterface $activityViewBuilderFactory
     )
     {
@@ -49,7 +48,7 @@ class EventAdmin extends Admin
 
     public function configureNavigationItems(NavigationItemCollection $navigationItemCollection): void
     {
-        if($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::EDIT)){
+        if ($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
             $eventNavigationItem = new NavigationItem('events');
             $eventNavigationItem->setView(static::EVENT_LIST_VIEW);
             $eventNavigationItem->setIcon('su-calendar');
@@ -63,24 +62,24 @@ class EventAdmin extends Admin
         $locales = $this->webspaceManager->getAllLocales();
         $formToolbarActions = [];
         $listToolbarActions = [];
-        if($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::ADD)){
+        if ($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::ADD)) {
             $listToolbarActions[] = new ToolbarAction('sulu_admin.add');
         }
-        if($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::EDIT)){
+        if ($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
             $formToolbarActions[] = new ToolbarAction('sulu_admin.save');
             $formToolbarActions[] = new TogglerToolbarAction('event.is_active',
                 'enabled',
                 'enable',
                 'disable');
         }
-        if($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::DELETE)){
+        if ($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::DELETE)) {
             $listToolbarActions[] = new ToolbarAction('sulu_admin.delete');
             $formToolbarActions[] = new ToolbarAction('sulu_admin.delete');
         }
-        if($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::VIEW)){
+        if ($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::VIEW)) {
             $listToolbarActions[] = new ToolbarAction('sulu_admin.export');
         }
-        if($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::EDIT)){
+        if ($this->securityChecker->hasPermission(Event::SECURITY_CONTEXT, PermissionTypes::EDIT)) {
             $listview = $this->viewBuilderFactory->createListViewBuilder(static::EVENT_LIST_VIEW, '/events/:locale')
                 ->setResourceKey(Event::RESOURCE_KEY)
                 ->setListKey(Event::LIST_KEY)
@@ -131,7 +130,7 @@ class EventAdmin extends Admin
                 ->setParent(static::EVENT_EDIT_FORM_VIEW);
             $viewCollection->add($editSeoFormView);
 
-            if($this->activityViewBuilderFactory->hasActivityListPermission()){
+            if ($this->activityViewBuilderFactory->hasActivityListPermission()) {
                 $viewCollection->add(
                     $this->activityViewBuilderFactory->createActivityListViewBuilder(static::EVENT_EDIT_FORM_VIEW . ".activity", "/activity", Event::RESOURCE_KEY)
                         ->setParent(static::EVENT_EDIT_FORM_VIEW)
