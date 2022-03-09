@@ -1,0 +1,22 @@
+{
+  "events": "Evénements",
+  "event.name": "Nom",
+  "event.start_date": "Date de début",
+  "event.end_date": "Date de fin",
+  "event.description": "Description",
+  "event.is_active": "Activer ?",
+  "event.image": "Image",
+  "event.pdf": "PDF",
+  "event.location": "Localisation",
+  "event.empty_event": "Sélectionner un événement",
+  "event.event_list": "Liste des événements",
+  "event.website": "Site Internet",
+  "event.email": "Email",
+  "event.phone_number": "Numéro de téléphone",
+  "event.directory": "Annuaire",
+  "event.searchName": "Evénements",
+  "sulu_activity.resource.events": "Evénements",
+  "sulu_activity.description.events.created": "{userFullName} a créé l'événement \"{resourceTitle}\"",
+  "sulu_activity.description.events.modified": "{userFullName} a modifié l'événement \"{resourceTitle}\"",
+  "sulu_activity.description.events.removed": "{userFullName} a supprimé l'événement \"{resourceTitle}\""
+}

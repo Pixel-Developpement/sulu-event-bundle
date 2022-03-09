@@ -1,0 +1,6 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+  Pixel\EventBundle\Controller\Website\:
+    resource: '../../Controller/Website'

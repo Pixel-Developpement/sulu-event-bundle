@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<list xmlns="http://schemas.sulu.io/list-builder/list">
+    <key>events</key>
+
+    <joins name="translation">
+        <join>
+            <entity-name>Pixel\EventBundle\Entity\EventTranslation</entity-name>
+            <field-name>Pixel\EventBundle\Entity\Event.translations</field-name>
+            <condition>Pixel\EventBundle\Entity\EventTranslation.locale = :locale</condition>
+        </join>
+    </joins>
+
+    <joins name="creator" ref="translation">
+        <join>
+            <entity-name>%sulu.model.user.class%_creator</entity-name>
+            <field-name>Pixel\EventBundle\Entity\EventTranslation.creator</field-name>
+        </join>
+        <join>
+            <entity-name>%sulu.model.contact.class%_creator</entity-name>
+            <field-name>%sulu.model.user.class%_creator.contact</field-name>
+        </join>
+    </joins>
+
+    <joins name="changer" ref="translation">
+        <join>
+            <entity-name>%sulu.model.user.class%_changer</entity-name>
+            <field-name>Pixel\EventBundle\Entity\EventTranslation.changer</field-name>
+        </join>
+        <join>
+            <entity-name>%sulu.model.contact.class%_changer</entity-name>
+            <field-name>%sulu.model.user.class%_changer.contact</field-name>
+        </join>
+    </joins>
+
+    <properties>
+        <property name="id" visibility="no" translation="sulu_admin.id">
+            <field-name>id</field-name>
+            <entity-name>Pixel\EventBundle\Entity\Event</entity-name>
+        </property>
+
+        <property name="name" visibility="always" searchability="yes" type="string" translation="event.name">
+            <field-name>name</field-name>
+            <entity-name>Pixel\EventBundle\Entity\EventTranslation</entity-name>
+        </property>
+
+        <property name="isActive" visibility="yes" type="bool" translation="event.is_active">
+            <field-name>enabled</field-name>
+            <entity-name>Pixel\EventBundle\Entity\Event</entity-name>
+        </property>
+
+        <property name="startDate" visibility="yes" translation="event.start_date" type="datetime">
+            <field-name>startDate</field-name>
+            <entity-name>Pixel\EventBundle\Entity\Event</entity-name>
+        </property>
+
+        <property name="endDate" visibility="yes" translation="event.end_date" type="datetime">
+            <field-name>endDate</field-name>
+            <entity-name>Pixel\EventBundle\Entity\Event</entity-name>
+        </property>
+
+        <concatenation-property name="creator" translation="sulu_admin.creator" visibility="yes" searchability="yes">
+            <field>
+                <field-name>firstName</field-name>
+                <entity-name>%sulu.model.contact.class%_creator</entity-name>
+
+                <joins ref="creator"/>
+            </field>
+            <field>
+                <field-name>lastName</field-name>
+                <entity-name>%sulu.model.contact.class%_creator</entity-name>
+
+                <joins ref="creator"/>
+            </field>
+           
+        </concatenation-property>
+
+        <concatenation-property name="changer" translation="sulu_admin.changer" visibility="yes" searchability="yes">
+            <field>
+                <field-name>firstName</field-name>
+                <entity-name>%sulu.model.contact.class%_changer</entity-name>
+
+                <joins ref="changer"/>
+            </field>
+            <field>
+                <field-name>lastName</field-name>
+                <entity-name>%sulu.model.contact.class%_changer</entity-name>
+
+                <joins ref="changer"/>
+            </field>
+        </concatenation-property>
+    </properties>
+</list>
