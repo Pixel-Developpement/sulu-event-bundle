@@ -5,7 +5,7 @@
 >
     <key>event_details</key>
     <properties>
-        <property name="name" colspan="10" type="text_line" mandatory="true">
+        <property name="name" type="text_line" mandatory="true">
             <meta>
                 <title>event.name</title>
             </meta>
@@ -13,12 +13,6 @@
             <params>
                 <param name="headline" value="true"/>
             </params>
-        </property>
-        <property name="enabled" colspan="2" type="checkbox" mandatory="true">
-            <meta>
-                <title>event.is_active</title>
-            </meta>
-
         </property>
         <property name="startDate" colspan="6" type="date" mandatory="true">
             <meta>

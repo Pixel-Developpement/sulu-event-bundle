@@ -26,6 +26,7 @@ class Event
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @Serializer\Expose()
      */
     private ?int $id = null;
 
@@ -57,7 +58,7 @@ class Event
      * @ORM\ManyToOne(targetEntity=MediaInterface::class)
      * @Serializer\Expose()
      */
-    private ?MediaInterface $pdf;
+    private ?MediaInterface $pdf = null;
 
     /**
      * @ORM\Column(type="json", nullable=true)

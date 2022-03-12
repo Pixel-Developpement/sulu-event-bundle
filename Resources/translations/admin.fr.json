@@ -18,5 +18,6 @@
   "sulu_activity.resource.events": "Evénements",
   "sulu_activity.description.events.created": "{userFullName} a créé l'événement \"{resourceTitle}\"",
   "sulu_activity.description.events.modified": "{userFullName} a modifié l'événement \"{resourceTitle}\"",
-  "sulu_activity.description.events.removed": "{userFullName} a supprimé l'événement \"{resourceTitle}\""
+  "sulu_activity.description.events.removed": "{userFullName} a supprimé l'événement \"{resourceTitle}\"",
+  "sulu_activity.description.events.restored": "{userFullName} a restauré l'événement \"{resourceTitle}\""
 }

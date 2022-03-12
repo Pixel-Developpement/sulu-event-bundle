@@ -96,6 +96,8 @@
         <service id="sulu_event.event_trash_item_handler" class="Pixel\EventBundle\Trash\EventTrashItemHandler">
             <argument type="service" id="sulu_trash.trash_item_repository"/>
             <argument type="service" id="doctrine.orm.default_entity_manager"/>
+            <argument type="service" id="sulu_trash.doctrine_restore_helper"/>
+            <argument type="service" id="sulu_activity.domain_event_collector"/>
 
             <tag name="sulu_trash.store_trash_item_handler"/>
             <tag name="sulu_trash.restore_trash_item_handler"/>
