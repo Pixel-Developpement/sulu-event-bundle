@@ -6,8 +6,12 @@ namespace Pixel\EventBundle\Trash;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Pixel\EventBundle\Admin\EventAdmin;
+use Pixel\EventBundle\Domain\Event\EventRestoredEvent;
 use Pixel\EventBundle\Entity\Event;
+use Sulu\Bundle\ActivityBundle\Application\Collector\DomainEventCollectorInterface;
 use Sulu\Bundle\MediaBundle\Entity\MediaInterface;
+use Sulu\Bundle\RouteBundle\Entity\Route;
+use Sulu\Bundle\TrashBundle\Application\DoctrineRestoreHelper\DoctrineRestoreHelperInterface;
 use Sulu\Bundle\TrashBundle\Application\RestoreConfigurationProvider\RestoreConfiguration;
 use Sulu\Bundle\TrashBundle\Application\RestoreConfigurationProvider\RestoreConfigurationProviderInterface;
 use Sulu\Bundle\TrashBundle\Application\TrashItemHandler\RestoreTrashItemHandlerInterface;
@@ -19,11 +23,20 @@ class EventTrashItemHandler implements StoreTrashItemHandlerInterface, RestoreTr
 {
     private TrashItemRepositoryInterface $trashItemRepository;
     private EntityManagerInterface $entityManager;
+    private DoctrineRestoreHelperInterface $doctrineRestoreHelper;
+    private DomainEventCollectorInterface $domainEventCollector;
 
-    public function __construct(TrashItemRepositoryInterface $trashItemRepository, EntityManagerInterface $entityManager)
+    public function __construct(
+        TrashItemRepositoryInterface $trashItemRepository,
+        EntityManagerInterface $entityManager,
+        DoctrineRestoreHelperInterface $doctrineRestoreHelper,
+        DomainEventCollectorInterface $domainEventCollector
+    )
     {
         $this->trashItemRepository = $trashItemRepository;
         $this->entityManager = $entityManager;
+        $this->doctrineRestoreHelper = $doctrineRestoreHelper;
+        $this->domainEventCollector = $domainEventCollector;
     }
 
     public static function getResourceKey(): string
@@ -69,13 +82,16 @@ class EventTrashItemHandler implements StoreTrashItemHandlerInterface, RestoreTr
     public function restore(TrashItemInterface $trashItem, array $restoreFormData = []): object
     {
         $data = $trashItem->getRestoreData();
+        $eventId = (int)$trashItem->getResourceId();
         $event = new Event();
         $event->setName($data['name']);
         $event->setDescription($data['description']);
         $event->setRoutePath($data['slug']);
         $event->setSeo($data['seo']);
-        $event->setStartDate($data['startDate']);
-        $event->setEndDate($data['endDate']);
+        $event->setStartDate(new \DateTimeImmutable($data['startDate']['date']));
+        if(isset($data['endDate'])){
+            $event->setEndDate(new \DateTimeImmutable($data['endDate']['date']));
+        }
         $event->setEnabled($data['enabled']);
         $event->setImage($this->entityManager->find(MediaInterface::class, $data['imageId']));
         if ($data['pdfId']) {
@@ -86,10 +102,27 @@ class EventTrashItemHandler implements StoreTrashItemHandlerInterface, RestoreTr
         $event->setEmail($data['email']);
         $event->setPhoneNumber($data['phoneNumber']);
         $event->setCards($data['cards']);
+        $this->domainEventCollector->collect(
+            new EventRestoredEvent($event, $data)
+        );
 
-        $this->entityManager->persist($event);
+        $this->doctrineRestoreHelper->persistAndFlushWithId($event, $eventId);
+        $this->createRoute($this->entityManager, $eventId, $event->getRoutePath(), Event::class);
         $this->entityManager->flush();
         return $event;
+    }
+
+    private function createRoute(EntityManagerInterface $manager, int $id, string $slug, string $class)
+    {
+        $route = new Route();
+        $route->setPath($slug);
+        $route->setLocale('fr');
+        $route->setEntityClass($class);
+        $route->setEntityId($id);
+        $route->setHistory(0);
+        $route->setCreated(new \DateTime());
+        $route->setChanged(new \DateTime());
+        $manager->persist($route);
     }
 
     public function getConfiguration(): RestoreConfiguration
