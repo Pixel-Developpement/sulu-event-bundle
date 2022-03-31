@@ -30,7 +30,7 @@
             </meta>
             <params>
                 <param name="entity_class" value="Pixel\EventBundle\Entity\Event"/>
-                <param name="route_schema" value="/events/{implode('-', object)}"/>
+                <param name="route_schema" value="/evenement/{implode('-', object)}"/>
             </params>
         </property>
         <property name="url" type="url" colspan="4">
@@ -53,7 +53,7 @@
                 <title>event.phone_number</title>
             </meta>
         </property>
-        <property name="image" type="single_media_selection" colspan="6" mandatory="true">
+        <property name="image" type="single_media_selection" colspan="6">
             <meta>
                 <title>event.image</title>
             </meta>

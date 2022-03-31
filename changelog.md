@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.4.4 (31/03/2022)
+
++ Msie en page détail d'un évenement
++ L'image n'est plus obligatoire
++ Meta title par défaut si vide
++ Ajout du link provider
++ Maj traduction
+
+## 2.4.3 (12/03/2022)
+
++ Ajout de l'évènement pour la restauration
+- Fix pour la suppression et l'état activé
+
 ## 2.4.2 (09/03/2022)
 
 - Changement de la version de sulu pour composer

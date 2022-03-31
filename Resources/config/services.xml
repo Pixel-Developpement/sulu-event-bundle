@@ -104,5 +104,12 @@
             <tag name="sulu_trash.restore_configuration_provider"/>
         </service>
 
+        <!--Link-->
+        <service id="sulu_event.event_link_provider" class="Pixel\EventBundle\Link\EventLinkProvider">
+            <argument type="service" id="event.event_repository"/>
+            <argument type="service" id="translator.default"/>
+            <tag name="sulu.link.provider" alias="evenement"/>
+        </service>
+
     </services>
 </container>

@@ -41,6 +41,7 @@ class EventObjectProvider implements PreviewObjectProviderInterface
      */
     public function setValues($object, $locale, array $data)
     {
+        $imageId = $data['image']['id'] ?? null;
         $enabled = $data['enabled'] ?? null;
         $endDate = $data['endDate'] ?? null;
         $url = $data['url'] ?? null;
@@ -53,7 +54,7 @@ class EventObjectProvider implements PreviewObjectProviderInterface
 
         $object->setName($data['name']);
         $object->setDescription($data['description']);
-        $object->setImage($this->mediaManager->getEntityById($data['image']['id']));
+        $object->setImage($imageId ? $this->mediaManager->getEntityById($data['image']['id']) : null);
         $object->setEnabled($enabled);
         $object->setStartDate(new \DateTimeImmutable($data['startDate']));
         $object->setEndDate($endDate ? new \DateTimeImmutable($data['endDate']) : null);

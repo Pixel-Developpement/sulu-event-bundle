@@ -6,3 +6,5 @@ email: Email
 phone.number: Numéro de téléphone
 address: Adresse
 our.sponsors: Nos partenaires
+event: Evénement
+event.emptyEvent: Sélectionner un événement

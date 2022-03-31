@@ -30,6 +30,15 @@ class EventController extends AbstractController
 
     public function indexAction(Event $event, $attributes = [], $preview = false, $partial = false): Response
     {
+
+        if (!$event->getSeo()) {
+            $seo = [
+                "title" => $event->getName(),
+            ];
+
+            $event->setSeo($seo);
+        }
+
         $parameters = $this->get('sulu_website.resolver.template_attribute')->resolve([
             'event' => $event,
             'localizations' => $this->getLocalizationsArrayForEntity($event),
