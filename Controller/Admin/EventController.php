@@ -149,6 +149,8 @@ class EventController extends AbstractRestController implements ClassResourceInt
     protected function mapDataToEntity(array $data, Event $entity, Request $request): void
     {
         $endDate = $data['endDate'] ?? null;
+        $imageId = $data['image']['id'] ?? null;
+        $enabled = $data['enabled'] ?? null;
         $seo = (isset($data['ext']['seo'])) ? $data['ext']['seo'] : null;
         $cards = (isset($data['cards'])) ? $data['cards'] : null;
         $url = $data['url'] ?? null;
@@ -160,9 +162,9 @@ class EventController extends AbstractRestController implements ClassResourceInt
         $entity->setStartDate(new \DateTimeImmutable($data['startDate']));
         $entity->setEndDate($endDate ? new \DateTimeImmutable($data['endDate']) : null);
         $entity->setDescription($data['description']);
-        $entity->setEnabled($data['enabled']);
+        $entity->setEnabled($enabled);
         $entity->setRoutePath($data['routePath']);
-        $entity->setImage($this->mediaManager->getEntityById($data['image']['id']));
+        $entity->setImage($imageId ? $this->mediaManager->getEntityById($data['image']['id']) : null);
         $entity->setPdf($pdf ? $this->mediaManager->getEntityById($data['pdf']['id']) : null);
         $entity->setLocation($data['location']);
         $entity->setSeo($seo);
