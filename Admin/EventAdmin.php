@@ -22,7 +22,7 @@ class EventAdmin extends Admin
     const EVENT_ADD_FORM_VIEW = 'event.event_add_form';
     const EVENT_ADD_DETAILS_FORM = 'event.event_add_form_details';
     const EVENT_EDIT_FORM_VIEW = 'event.event_edit_form';
-    const EVENT_EDIT_DETAILS_FORM_VIEW = 'event.event_edit_form_detail';
+    const EVENT_EDIT_DETAILS_FORM_VIEW = 'event.event_edit_form_details';
     const EVENT_EDIT_SEO_FORM_VIEW = 'event.event_edit_form_seo';
 
     /**

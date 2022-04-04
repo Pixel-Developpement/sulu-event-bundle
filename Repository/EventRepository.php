@@ -2,7 +2,9 @@
 
 namespace Pixel\EventBundle\Repository;
 
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Pixel\EventBundle\Entity\Event;
@@ -12,6 +14,11 @@ use Sulu\Component\SmartContent\Orm\DataProviderRepositoryTrait;
 class EventRepository extends EntityRepository implements DataProviderRepositoryInterface
 {
     use DataProviderRepositoryTrait;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        parent::__construct($em, new ClassMetadata(Event::class));
+    }
 
     public function create(string $locale): Event
     {

@@ -85,12 +85,6 @@ class Event
     private ?string $phoneNumber;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
-     * @Serializer\Expose()
-     */
-    private $cards;
-
-    /**
      * @var Collection<string, EventTranslation>
      * @ORM\OneToMany(targetEntity="Pixel\EventBundle\Entity\EventTranslation", mappedBy="event", cascade={"ALL"}, indexBy="locale")
      * @Serializer\Exclude
@@ -109,9 +103,9 @@ class Event
     }
 
     /**
-     * @return mixed
+     * @return int|null
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -422,22 +416,6 @@ class Event
     public function setEnabled(?bool $enabled): void
     {
         $this->enabled = $enabled;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCards()
-    {
-        return $this->cards;
-    }
-
-    /**
-     * @param mixed $cards
-     */
-    public function setCards($cards): void
-    {
-        $this->cards = $cards;
     }
 
     public function getTranslations(): array

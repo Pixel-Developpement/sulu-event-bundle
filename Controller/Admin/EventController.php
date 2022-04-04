@@ -28,7 +28,7 @@ use Sulu\Component\Rest\AbstractRestController;
 use Sulu\Component\Rest\Exception\EntityNotFoundException;
 use Sulu\Component\Rest\Exception\RestException;
 use Sulu\Component\Rest\RequestParametersTrait;
-use Sulu\Component\Rest\RestHelperInterface;
+use Sulu\Component\Security\SecuredControllerInterface;
 use Sulu\Component\Webspace\Manager\WebspaceManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,7 +39,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 /**
  * @RouteResource("event")
  */
-class EventController extends AbstractRestController implements ClassResourceInterface
+class EventController extends AbstractRestController implements ClassResourceInterface, SecuredControllerInterface
 {
 
     use RequestParametersTrait;
@@ -54,10 +54,7 @@ class EventController extends AbstractRestController implements ClassResourceInt
      */
     private DoctrineListRepresentationFactory $doctrineListRepresentationFactory;
 
-    /**
-     * @var RestHelperInterface
-     */
-    private $restHelper;
+
 
     /**
      * @var EntityManagerInterface
@@ -75,7 +72,6 @@ class EventController extends AbstractRestController implements ClassResourceInt
     public function __construct(
         ViewHandlerInterface              $viewHandler,
         DoctrineListRepresentationFactory $doctrineListRepresentationFactory,
-        RestHelperInterface               $restHelper,
         EntityManagerInterface            $entityManager,
         WebspaceManagerInterface          $webspaceManager,
         RouteManagerInterface             $routeManager,
@@ -90,7 +86,6 @@ class EventController extends AbstractRestController implements ClassResourceInt
     {
         $this->viewHandler = $viewHandler;
         $this->doctrineListRepresentationFactory = $doctrineListRepresentationFactory;
-        $this->restHelper = $restHelper;
         $this->entityManager = $entityManager;
         $this->webspaceManager = $webspaceManager;
         $this->routeManager = $routeManager;
@@ -112,7 +107,7 @@ class EventController extends AbstractRestController implements ClassResourceInt
             ['locale' => $locale]
         );
 
-        return $this->viewHandler->handle(View::create($listRepresentation));
+        return $this->handleView($this->view($listRepresentation));
     }
 
     public function getAction(int $id, Request $request): Response
@@ -121,7 +116,7 @@ class EventController extends AbstractRestController implements ClassResourceInt
         if (!$event) {
             throw new NotFoundHttpException();
         }
-        return $this->viewHandler->handle(View::create($event));
+        return $this->handleView($this->view($event));
     }
 
     protected function load(int $id, Request $request): ?Event
@@ -152,7 +147,6 @@ class EventController extends AbstractRestController implements ClassResourceInt
         $imageId = $data['image']['id'] ?? null;
         $enabled = $data['enabled'] ?? null;
         $seo = (isset($data['ext']['seo'])) ? $data['ext']['seo'] : null;
-        $cards = (isset($data['cards'])) ? $data['cards'] : null;
         $url = $data['url'] ?? null;
         $email = $data['email'] ?? null;
         $phoneNumber = $data['phoneNumber'] ?? null;
@@ -171,7 +165,6 @@ class EventController extends AbstractRestController implements ClassResourceInt
         $entity->setUrl($url);
         $entity->setEmail($email);
         $entity->setPhoneNumber($phoneNumber);
-        $entity->setCards($cards);
     }
 
     protected function updateRoutesForEntity(Event $entity): void
@@ -203,7 +196,7 @@ class EventController extends AbstractRestController implements ClassResourceInt
             new EventCreatedEvent($event, $data)
         );
         $this->entityManager->flush();
-        return $this->viewHandler->handle(View::create($event));
+        return $this->handleView($this->view($event, 201));
     }
 
     protected function create(Request $request): Event

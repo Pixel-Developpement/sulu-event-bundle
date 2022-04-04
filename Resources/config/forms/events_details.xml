@@ -39,6 +39,7 @@
             </meta>
             <params>
                 <param name="schemes" type="collection">
+                    <param name="http://"/>
                     <param name="https://"/>
                 </param>
             </params>
@@ -68,11 +69,6 @@
             <params>
                 <param name="types" value="document"/>
             </params>
-        </property>
-        <property name="cards" type="card_selection">
-            <meta>
-                <title>event.directory</title>
-            </meta>
         </property>
 
         <property name="description" type="text_editor" mandatory="true">
