@@ -40,6 +40,11 @@ class EventExtension extends Extension implements PrependExtensionInterface
                                 'list' => 'event.get_events',
                             ],
                         ],
+                        'event_settings' => [
+                            'routes' => [
+                                'detail' => 'event.get_event-settings'
+                            ]
+                        ]
                     ],
                     'field_type_options' => [
                         'selection' => [
