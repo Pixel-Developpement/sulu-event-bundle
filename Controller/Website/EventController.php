@@ -31,7 +31,7 @@ class EventController extends AbstractController
     public function indexAction(Event $event, $attributes = [], $preview = false, $partial = false): Response
     {
 
-        if (!$event->getSeo()) {
+        if (!$event->getSeo() || (isset($event->getSeo()['title']) && !$event->getSeo()['title'])) {
             $seo = [
                 "title" => $event->getName(),
             ];

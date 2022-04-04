@@ -40,16 +40,19 @@ class EventTranslation implements AuditableInterface
 
     /**
      * @ORM\Column(type="string")
+     * @Serializer\Expose()
      */
     private $name;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Serializer\Expose()
      */
     private ?string $description;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Serializer\Expose()
      *
      * @Serializer\Expose()
      */
@@ -73,14 +76,6 @@ class EventTranslation implements AuditableInterface
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int|null $id
-     */
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
     }
 
     /**
@@ -120,7 +115,7 @@ class EventTranslation implements AuditableInterface
      */
     public function setName($name): void
     {
-        $this->name = $name;
+        $this->name = trim($name);
     }
 
     /**

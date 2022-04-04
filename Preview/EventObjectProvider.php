@@ -48,9 +48,7 @@ class EventObjectProvider implements PreviewObjectProviderInterface
         $email = $data['email'] ?? null;
         $phoneNumber = $data['phoneNumber'] ?? null;
         $location = $data['location'] ?? null;
-        $cards = $data['cards'] ?? null;
 
-        dump($cards);
 
         $object->setName($data['name']);
         $object->setDescription($data['description']);
