@@ -1,8 +1,17 @@
 # Changelog
 
-## 2.4.6 (03/04/2022)
+## 2.4.7 (15/04/2022)
 
++ Ajout Galerie d'image
++ Ajout des infos (tél, email, site et fichier dans un encart dédié)
++ Mise à jour du format de l'image
 
+## 2.4.6 (04/04/2022)
+
++ Ajout de la configuration
++ Ajout du http pour l'url
+- Retrait de la liaison avec l'annuaire
+- Fix meta title
 
 ## 2.4.5 (31/03/2022)
 
