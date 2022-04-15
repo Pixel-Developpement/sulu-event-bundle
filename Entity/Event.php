@@ -85,6 +85,12 @@ class Event
     private ?string $phoneNumber;
 
     /**
+     * @ORM\Column(type="json", nullable=true)
+     * @Serializer\Expose()
+     */
+    private ?array $images;
+
+    /**
      * @var Collection<string, EventTranslation>
      * @ORM\OneToMany(targetEntity="Pixel\EventBundle\Entity\EventTranslation", mappedBy="event", cascade={"ALL"}, indexBy="locale")
      * @Serializer\Exclude
@@ -432,5 +438,21 @@ class Event
     {
         $this->locale = $locale;
         return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getImages(): ?array
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param array|null $images
+     */
+    public function setImages(?array $images): void
+    {
+        $this->images = $images;
     }
 }

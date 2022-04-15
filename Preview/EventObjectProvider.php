@@ -48,6 +48,7 @@ class EventObjectProvider implements PreviewObjectProviderInterface
         $email = $data['email'] ?? null;
         $phoneNumber = $data['phoneNumber'] ?? null;
         $location = $data['location'] ?? null;
+        $images = $data['images'] ?? null;
 
 
         $object->setName($data['name']);
@@ -60,8 +61,7 @@ class EventObjectProvider implements PreviewObjectProviderInterface
         $object->setEmail($email);
         $object->setPhoneNumber($phoneNumber);
         $object->setLocation($location);
-
-
+        $object->setImages($images);
     }
 
     public function setContext($object, $locale, array $context)

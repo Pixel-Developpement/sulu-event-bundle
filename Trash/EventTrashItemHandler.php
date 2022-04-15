@@ -63,7 +63,7 @@ class EventTrashItemHandler implements StoreTrashItemHandlerInterface, RestoreTr
             "url" => $resource->getUrl(),
             "email" => $resource->getEmail(),
             "phoneNumber" => $resource->getPhoneNumber(),
-            "cards" => $resource->getCards(),
+            "images" => $resource->getImages()
         ];
 
         return $this->trashItemRepository->create(
@@ -101,7 +101,7 @@ class EventTrashItemHandler implements StoreTrashItemHandlerInterface, RestoreTr
         $event->setUrl($data['url']);
         $event->setEmail($data['email']);
         $event->setPhoneNumber($data['phoneNumber']);
-        $event->setCards($data['cards']);
+        $event->setImages($data['images']);
         $this->domainEventCollector->collect(
             new EventRestoredEvent($event, $data)
         );

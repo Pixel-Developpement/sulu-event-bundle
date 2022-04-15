@@ -151,6 +151,7 @@ class EventController extends AbstractRestController implements ClassResourceInt
         $email = $data['email'] ?? null;
         $phoneNumber = $data['phoneNumber'] ?? null;
         $pdf = $data['pdf']['id'] ?? null;
+        $images = $data['images'] ?? null;
 
         $entity->setName($data['name']);
         $entity->setStartDate(new \DateTimeImmutable($data['startDate']));
@@ -165,6 +166,7 @@ class EventController extends AbstractRestController implements ClassResourceInt
         $entity->setUrl($url);
         $entity->setEmail($email);
         $entity->setPhoneNumber($phoneNumber);
+        $entity->setImages($images);
     }
 
     protected function updateRoutesForEntity(Event $entity): void

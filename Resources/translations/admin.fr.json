@@ -6,6 +6,7 @@
   "event.description": "Description",
   "event.is_active": "Activer ?",
   "event.image": "Image",
+  "event.gallery": "Galerie d'images",
   "event.pdf": "PDF",
   "event.location": "Localisation",
   "event.empty_event": "Sélectionner un événement",

@@ -54,7 +54,7 @@
                 <title>event.phone_number</title>
             </meta>
         </property>
-        <property name="image" type="single_media_selection" colspan="6">
+        <property name="image" type="single_media_selection" colspan="4">
             <meta>
                 <title>event.image</title>
             </meta>
@@ -62,7 +62,15 @@
                 <param name="types" value="image"/>
             </params>
         </property>
-        <property name="pdf" type="single_media_selection" colspan="6">
+        <property name="images" type="media_selection" colspan="4">
+            <meta>
+                <title>event.gallery</title>
+            </meta>
+            <params>
+                <param name="types" value="image"/>
+            </params>
+        </property>
+        <property name="pdf" type="single_media_selection" colspan="4">
             <meta>
                 <title>event.pdf</title>
             </meta>
