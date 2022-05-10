@@ -37,6 +37,12 @@ class Setting implements AuditableInterface
     private ?MediaInterface $defaultImage = null;
 
     /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Serializer\Expose()
+     */
+    private ?int $limitBlockEvent = null;
+
+    /**
      * @return int|null
      */
     public function getId(): ?int
@@ -58,5 +64,21 @@ class Setting implements AuditableInterface
     public function setDefaultImage(?MediaInterface $defaultImage): void
     {
         $this->defaultImage = $defaultImage;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getLimitBlockEvent(): ?int
+    {
+        return $this->limitBlockEvent;
+    }
+
+    /**
+     * @param int|null $limitBlockEvent
+     */
+    public function setLimitBlockEvent(?int $limitBlockEvent): void
+    {
+        $this->limitBlockEvent = $limitBlockEvent;
     }
 }

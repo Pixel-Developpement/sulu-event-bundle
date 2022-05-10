@@ -18,6 +18,7 @@
   "event.searchName": "Evénements",
   "event.settings": "Gestion des événements",
   "event_settings.defaultImage": "Image par défaut",
+  "event_settings.limitBlockEvent": "Limite d'événements page d'accueil",
   "sulu_activity.resource.events": "Evénements",
   "sulu_activity.description.events.created": "{userFullName} a créé l'événement \"{resourceTitle}\"",
   "sulu_activity.description.events.modified": "{userFullName} a modifié l'événement \"{resourceTitle}\"",

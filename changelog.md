@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.8 (10/05/2022)
+
++ Ajout bloc pour les évènements
+
 ## 2.4.7 (15/04/2022)
 
 + Ajout Galerie d'image
