@@ -59,6 +59,16 @@ class EventRepository extends EntityRepository implements DataProviderRepository
         return $query->getQuery()->getSingleScalarResult();
     }
 
+    public function findAllScheduledEvents(int $limit)
+    {
+        $query = $this->createQueryBuilder('e')
+            ->where('e.enabled = 1 AND (e.startDate >= :now OR (e.endDate IS NOT NULL AND e.endDate >= :now))')
+            ->orderBy("e.startDate", "ASC")
+            ->setMaxResults($limit)
+            ->setParameter("now", (new \DateTimeImmutable())->format("Y-m-d"));
+        return $query->getQuery()->getResult();
+    }
+
     /**
      * {@inheritdoc}
      */

@@ -57,8 +57,10 @@ class SettingController extends AbstractRestController implements ClassResourceI
     public function mapDataToEntity(array $data, Setting $entity): void
     {
         $defaultImageId = $data['defaultImage']['id'] ?? null;
+        $limitBlockEvent = $data['limitBlockEvent'] ?? null;
 
         $entity->setDefaultImage($defaultImageId ? $this->mediaManager->getEntityById($defaultImageId) : null);
+        $entity->setLimitBlockEvent($limitBlockEvent);
     }
 
     public function getSecurityContext()

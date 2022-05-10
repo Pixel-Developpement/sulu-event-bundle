@@ -10,5 +10,13 @@
                 <title>event_settings.defaultImage</title>
             </meta>
         </property>
+        <property name="limitBlockEvent" type="number">
+            <meta>
+                <title>event_settings.limitBlockEvent</title>
+            </meta>
+            <params>
+                <param name="min" value="0"/>
+            </params>
+        </property>
     </properties>
 </form>
