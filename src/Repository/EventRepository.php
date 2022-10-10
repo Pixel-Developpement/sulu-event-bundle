@@ -23,6 +23,7 @@ class EventRepository extends EntityRepository implements DataProviderRepository
     public function create(string $locale): Event
     {
         $event = new Event();
+        $event->setDefaultLocale($locale);
         $event->setLocale($locale);
         return $event;
     }

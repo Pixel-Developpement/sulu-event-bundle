@@ -30,7 +30,7 @@ class EventLinkProvider implements LinkProviderInterface
         return LinkConfigurationBuilder::create()
             ->setTitle($this->translator->trans('event'))
             ->setResourceKey(Event::RESOURCE_KEY) // the resourceKey of the entity that should be loaded
-            ->setListAdapter('column_list')
+            ->setListAdapter('table')
             ->setDisplayProperties(['name'])
             ->setOverlayTitle($this->translator->trans('event'))
             ->setEmptyText($this->translator->trans('event.emptyEvent'))

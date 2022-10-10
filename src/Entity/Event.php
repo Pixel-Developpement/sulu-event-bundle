@@ -98,6 +98,11 @@ class Event
     private $translations;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private ?string $defaultLocale;
+
+    /**
      * @var string
      */
     private string $locale = 'fr';
@@ -427,6 +432,22 @@ class Event
     public function getTranslations(): array
     {
         return $this->translations->toArray();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDefaultLocale(): ?string
+    {
+        return $this->defaultLocale;
+    }
+
+    /**
+     * @param string|null $defaultLocale
+     */
+    public function setDefaultLocale(?string $defaultLocale): void
+    {
+        $this->defaultLocale = $defaultLocale;
     }
 
     public function getLocale(): string

@@ -92,7 +92,7 @@ class EventAdmin extends Admin
             $viewCollection->add($listview);
 
             $addFormView = $this->viewBuilderFactory->createResourceTabViewBuilder(static::EVENT_ADD_FORM_VIEW, '/events/:locale/add')
-                ->setResourceKey(Event::FORM_KEY)
+                ->setResourceKey(Event::RESOURCE_KEY)
                 ->addLocales($locales)
                 ->setBackView(static::EVENT_LIST_VIEW);
             $viewCollection->add($addFormView);

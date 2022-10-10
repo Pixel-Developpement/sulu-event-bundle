@@ -116,12 +116,17 @@ class EventController extends AbstractRestController implements ClassResourceInt
         if (!$event) {
             throw new NotFoundHttpException();
         }
+
+        if($event->getName() === null && $event->getDefaultLocale()){
+            $request->setMethod($event->getDefaultLocale());
+            $event = $this->load($id, $request, $event->getDefaultLocale());
+        }
         return $this->handleView($this->view($event));
     }
 
-    protected function load(int $id, Request $request): ?Event
+    protected function load(int $id, Request $request, $defaultLocale = null): ?Event
     {
-        return $this->repository->findById($id, (string)$this->getLocale($request));
+        return $this->repository->findById($id, ($defaultLocale) ? $defaultLocale : (string)$this->getLocale($request));
     }
 
     public function putAction(Request $request, int $id): Response
@@ -248,18 +253,20 @@ class EventController extends AbstractRestController implements ClassResourceInt
     public function postTriggerAction(int $id, Request $request): Response
     {
         $action = $this->getRequestParameter($request, 'action', true);
-        //$locale = $this->getRequestParameter($request, 'locale', true);
+        $locale = $this->getRequestParameter($request, 'locale', true);
 
         try {
             switch ($action) {
                 case 'enable':
-                    $item = $this->entityManager->getReference(Event::class, $id);
+                    $item = $this->entityManager->getRepository(Event::class)->find($id);
+                    $item->setLocale($locale);
                     $item->setEnabled(true);
                     $this->entityManager->persist($item);
                     $this->entityManager->flush();
                     break;
                 case 'disable':
-                    $item = $this->entityManager->getReference(Event::class, $id);
+                    $item = $this->entityManager->getRepository(Event::class)->find($id);
+                    $item->setLocale($locale);
                     $item->setEnabled(false);
                     $this->entityManager->persist($item);
                     $this->entityManager->flush();

@@ -9,6 +9,13 @@
             <condition>Pixel\EventBundle\Entity\EventTranslation.locale = :locale</condition>
         </join>
     </joins>
+    <joins name="defaultTranslation">
+        <join>
+            <entity-name>Pixel\EventBundle\Entity\EventTranslationDefault</entity-name>
+            <field-name>Pixel\EventBundle\Entity\Event.translations</field-name>
+            <condition>Pixel\EventBundle\Entity\EventTranslationDefault.name = Pixel\EventBundle\Entity\Event.defaultLocale</condition>
+        </join>
+    </joins>
 
     <joins name="creator" ref="translation">
         <join>
